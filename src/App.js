@@ -7,7 +7,8 @@ import {items} from './static-data';
 class App extends React.Component {
 
     state = {
-        activeTab: 0
+        activeTab: 0,
+        cart: []
     };
 
     handleTabChange = (index) => {
@@ -21,10 +22,16 @@ class App extends React.Component {
         switch (this.state.activeTab) {
             default:
             case 0:
-                return <ItemPage items={items}/>
+                return (
+                    <ItemPage items={items} onAddToCart={this.handleAddToCart}/>
+                );
             case 1:
                 return <span>Cart</span>;
         }
+    }
+
+    handleAddToCart = (item) => {
+        this.setState({cart: [...this.state.cart, item.id]});
     }
 
 
@@ -32,6 +39,9 @@ class App extends React.Component {
         let {activeTab} = this.state;
         return (
             <div className="App">
+                <div>
+                    {this.state.cart.length} items
+                </div>
                 <Nav activeTab={activeTab} onTabChange={this.handleTabChange}/>
                 <main className="App-content"> {this.renderContent()}
                 </main>
