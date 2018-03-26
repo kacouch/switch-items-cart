@@ -51,9 +51,10 @@ class App extends React.Component {
                 count: itemCounts[itemId]
             }
         });
-
         return (
-            <CartPage items={cartItems}/>
+            <CartPage items={cartItems}
+                      onAddOne={this.handleAddToCart}
+                      onRemoveOne={this.handleRemoveOne}/>
         );
     }
 
@@ -62,7 +63,17 @@ class App extends React.Component {
     }
 
 
-    render() {
+    handleRemoveOne = (item) => {
+        let index = this.state.cart.indexOf(item.id);
+        this.setState({
+            cart: [
+                ...this.state.cart.slice(0, index),
+                ...this.state.cart.slice(index + 1)]
+        });
+    }
+
+
+render() {
         let {activeTab} = this.state;
         return (
             <div className="App">
